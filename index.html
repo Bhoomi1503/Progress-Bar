@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progress Bar</title>
+    <style>
+        body {
+            background-color: lightgreen;
+            align-items: center;
+            text-align: center;
+            height: 450px;
+            margin-top: 200px;
+
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+        }
+
+        .step {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-left:200px;
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .step.active {
+            background-color: #fff;
+            border-color: #000;
+        }
+
+        .step.completed {
+            background-color: #00FF00;
+            border-color: #00FF00;
+        }
+
+        .step i {
+            font-size: 24px;
+            
+        }
+
+        .step.active i {
+            color: #000;
+        }
+
+        .step.completed i {
+            color: #fff;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        
+            
+        }
+
+        .button {
+            width: 80px;
+            height: 50px;
+            background-color: darkmagenta;
+            color: #000000;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 10px;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+        }
+        .button:hover{
+            background-color: #ccc;
+        }
+        .button.active:hover{
+            background-color: lightseagreen;
+        }
+        .button.active {
+            background-color: #3c80c8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Progress Bar</h1><br>
+    <div class="container">
+        <div class="step"><i class="icon"></i></div>
+        <div class="step"><i class="icon"></i></div>
+        <div class="step"><i class="icon"></i></div>
+        <div class="step"><i class="icon"></i></div>
+        <div class="step"><i class="icon"></i></div>
+    </div>
+    <br><br>
+    <div class="buttons">
+        <button class="button">←</button>
+        <button class="button active">→</button>
+    </div>
+
+    <script>
+        const steps = document.querySelectorAll('.step');
+        const buttons = document.querySelectorAll('.button');
+        let currentStep = 0;
+
+        function updateSteps() {
+            steps.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index === currentStep) {
+                    step.classList.add('active');
+                    step.querySelector('i').textContent = '✓';
+                } else if (index < currentStep) {
+                    step.classList.add('completed');
+                    step.querySelector('i').textContent = '✓';
+                } else {
+                    step.querySelector('i').textContent = 'X';
+                }
+            });
+        }
+
+        buttons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                if (index === 0) {
+                    if (currentStep > 0) {
+                        currentStep--;
+                    }
+                } else {
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                    }
+                }
+                updateSteps();
+            });
+        });
+
+        updateSteps(); 
+    </script>
+</body>
+</html>
